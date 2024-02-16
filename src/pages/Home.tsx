@@ -4,7 +4,7 @@ import { routes } from "../utils/routes";
 
 export const Home = () => {
   return (
-    <Container sx={{ marginTop: "1rem" }}>
+    <Container>
       <Stack direction="row" flexWrap="wrap" gap="2rem">
         {routes.map(
           (route) =>

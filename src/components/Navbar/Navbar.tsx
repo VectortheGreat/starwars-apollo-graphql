@@ -32,7 +32,7 @@ export const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" color="transparent">
+    <AppBar position="static" color="transparent" sx={{ marginBottom: "1.5rem" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Avatar

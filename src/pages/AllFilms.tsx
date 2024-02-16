@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { Container } from "@mui/material";
-import CollapsibleTable from "../components/Table";
+import TableComponent from "../components/Table";
 
 export const AllFilms = () => {
   const GET_FILMS = gql`
@@ -9,18 +9,24 @@ export const AllFilms = () => {
         films {
           title
           director
-          producers
           episodeID
           releaseDate
+          characterConnection {
+            characters {
+              name
+              gender
+              birthYear
+              mass
+            }
+          }
         }
       }
     }
   `;
   const { error, loading, data } = useQuery(GET_FILMS);
-  console.log({ error, loading, data });
   return (
     <Container>
-      <CollapsibleTable />
+      <TableComponent error={error} loading={loading} data={data} />
     </Container>
   );
 };
