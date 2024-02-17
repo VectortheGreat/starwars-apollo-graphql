@@ -13,13 +13,6 @@ export const AllPeople = () => {
       ${childQuery} {
         ${peopleTableFields.map((field) => field.key).join("\n")}
         ${generateCollapseFields(peopleCollapseTableFields)}
-        homeworld {
-          name
-          surfaceWater
-          gravity
-          diameter
-          population
-        }
       }
     }
   }
