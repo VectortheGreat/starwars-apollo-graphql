@@ -1,13 +1,14 @@
 import { TableCell, TableHead, TableRow } from "@mui/material";
+import { useTableFields, useTableLocation } from "../../../../../utils/helpers/dynamicTableField";
 
-export const CollapseTableHeadComp = () => {
+export const CollapseTableHeadComp = ({ index }: { index: number }) => {
+  const dynamicFields = useTableFields(useTableLocation());
   return (
     <TableHead>
       <TableRow>
-        <TableCell>Name</TableCell>
-        <TableCell>Gender</TableCell>
-        <TableCell align="right">Mass</TableCell>
-        <TableCell align="right">Birth Year</TableCell>
+        {dynamicFields[index].fields.map((field) => (
+          <TableCell key={field.name}>{field.name}</TableCell>
+        ))}
       </TableRow>
     </TableHead>
   );

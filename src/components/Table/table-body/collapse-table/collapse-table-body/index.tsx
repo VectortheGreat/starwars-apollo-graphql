@@ -1,16 +1,23 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
+import { filmCollapseTableFields } from "../../../../../utils/table-fields/filmTableFields";
+import { useTableFields, useTableLocation } from "../../../../../utils/helpers/dynamicTableField";
 
-export const CollapseTableBodyComp = ({ film }: { film: any }) => {
+export const CollapseTableBodyComp = ({ film, index }: { film: any; index: number }) => {
+  const parentKey = filmCollapseTableFields[index].parentKey;
+  const childKey = filmCollapseTableFields[index].childKey;
+  const parentIndex = parentKey ?? 0;
+  const childIndex = childKey ?? 0;
+
+  const dynamicFields = useTableFields(useTableLocation());
   return (
     <TableBody>
-      {film.characterConnection?.characters?.map((character: any) => (
-        <TableRow key={character.name}>
-          <TableCell component="th" scope="row">
-            {character.name}
-          </TableCell>
-          <TableCell>{character.gender}</TableCell>
-          <TableCell align="right">{character.mass}</TableCell>
-          <TableCell align="right">{character.birthYear}</TableCell>
+      {film[parentIndex]?.[childIndex].map((key: any, i: number) => (
+        <TableRow key={i}>
+          {dynamicFields[index].fields.map((field) => (
+            <TableCell key={field.key} component="th" scope="row">
+              {key[field.key]}
+            </TableCell>
+          ))}
         </TableRow>
       ))}
     </TableBody>

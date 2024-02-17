@@ -6,7 +6,6 @@ import { TableBodyComp } from "./table-body";
 
 export default function TableComponent({ error, loading, data }: { error: any; loading: any; data: any }) {
   const films = data?.allFilms.films ?? [];
-
   if (error) return <div>Error</div>;
   if (loading) return <div>Loading...</div>;
 

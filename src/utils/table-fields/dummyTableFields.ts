@@ -1,5 +1,6 @@
-export const filmTableFields = [
-  { id: 1, key: "title", name: "Name", align: "left" },
+export const yourPagesTableFields = [
+  { id: 1, key: "title(api_object_key)", name: "Name(Table Name)", align: "left" },
+  //* Other Table Fields Here
   { id: 2, key: "director", name: "Director" },
   { id: 3, key: "episodeID", name: "Episode" },
   { id: 4, key: "releaseDate", name: "Release Date" },
@@ -7,16 +8,20 @@ export const filmTableFields = [
 
 export const filmCollapseTableFields = [
   {
-    title: "Actors",
-    parentKey: "characterConnection",
-    childKey: "characters",
+    title: "Actors", //* Collapse Table Title
+    parentKey: "characterConnection", //* It is Dynamic Parent Query Key
+    childKey: "characters", //* It is Dynamic Child Query Key
     fields: [
-      { id: 1, key: "name", name: "Name", align: "left" },
+      { id: 1, key: "name(api_object_key)", name: "Name(Table Name)", align: "left" },
+      //* Other Collapse Table Fields Here
       { id: 2, key: "gender", name: "Gender" },
       { id: 3, key: "birthYear", name: "Birth Year" },
       { id: 4, key: "mass", name: "Mass" },
     ],
   },
+
+  //* Other Collapse Table Fields Here
+
   {
     title: "Planets",
     parentKey: "planetConnection",
