@@ -5,10 +5,12 @@ import { filmCollapseTableFields, filmTableFields } from "../utils/table-fields/
 import { generateCollapseFields } from "../utils/helpers/generateCollapseField";
 
 export const AllFilms = () => {
+  const parentQuery = "allFilms";
+  const childQuery = "films";
   const GET_FILMS = gql`
   query getFilms {
-    allFilms {
-      films {
+    ${parentQuery} {
+      ${childQuery} {
         ${filmTableFields.map((field) => field.key).join("\n")}
         ${generateCollapseFields(filmCollapseTableFields)}
       }
@@ -16,9 +18,16 @@ export const AllFilms = () => {
   }
 `;
   const { error, loading, data } = useQuery(GET_FILMS);
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
   return (
     <Container>
-      <TableComponent error={error} loading={loading} data={data} />
+      <TableComponent data={data[`${parentQuery}`][`${childQuery}`]} />
     </Container>
   );
 };

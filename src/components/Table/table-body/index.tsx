@@ -6,7 +6,7 @@ import TableRow from "@mui/material/TableRow";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { CollapseTable } from "./collapse-table";
-import { filmTableFields } from "../../../utils/table-fields/filmTableFields";
+import { useDynamicTableFields, useTableLocation } from "../../../utils/helpers/dynamicTableField";
 
 export const TableBodyComp = ({ data }: { data: any }) => {
   const [openStates, setOpenStates] = useState(data.map(() => false));
@@ -15,7 +15,7 @@ export const TableBodyComp = ({ data }: { data: any }) => {
     newOpenStates[index] = !newOpenStates[index];
     setOpenStates(newOpenStates);
   };
-
+  const dynamicFields = useDynamicTableFields(useTableLocation());
   return (
     <TableBody>
       {data?.map((dt: any, index: number) => (
@@ -26,13 +26,13 @@ export const TableBodyComp = ({ data }: { data: any }) => {
                 {openStates[index] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
               </IconButton>
             </TableCell>
-            {filmTableFields.map((field) => (
+            {dynamicFields.map((field: any) => (
               <TableCell key={field.id} align={field.align ? "left" : "right"}>
                 {dt[field.key]}
               </TableCell>
             ))}
           </TableRow>
-          <CollapseTable index={index} openStates={openStates} film={dt} />
+          <CollapseTable index={index} openStates={openStates} data={dt} />
         </React.Fragment>
       ))}
     </TableBody>

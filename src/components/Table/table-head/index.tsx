@@ -1,12 +1,13 @@
 import { TableCell, TableHead, TableRow } from "@mui/material";
-import { filmTableFields } from "../../../utils/table-fields/filmTableFields";
+import { useDynamicTableFields, useTableLocation } from "../../../utils/helpers/dynamicTableField";
 
 export const TableHeadComp = () => {
+  const dynamicFields = useDynamicTableFields(useTableLocation());
   return (
     <TableHead>
       <TableRow>
         <TableCell />
-        {filmTableFields.map((field) => (
+        {dynamicFields.map((field: any) => (
           <TableCell key={field.id} align={field.align ? "left" : "right"}>
             {field.name}
           </TableCell>

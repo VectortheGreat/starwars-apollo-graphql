@@ -6,39 +6,22 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import { CollapseTableHeadComp } from "./collapse-table-head";
 import { CollapseTableBodyComp } from "./collapse-table-body";
-import { filmCollapseTableFields } from "../../../../utils/table-fields/filmTableFields";
-import { useLocation } from "react-router-dom";
+import { useCollapseTableFields, useTableLocation } from "../../../../utils/helpers/dynamicTableField";
 
-export const CollapseTable = ({ index, openStates, film }: { index: number; openStates: any[]; film: any }) => {
-  const location = useLocation();
-  const pathname = location.pathname.split("/")[1];
-  const collapseTableFields: {
-    [key: string]: {
-      title: string;
-      parentKey: string;
-      childKey: string;
-      fields: (
-        | { id: number; key: string; name: string; align: string }
-        | { id: number; key: string; name: string; align?: undefined }
-      )[];
-    }[];
-  } = {
-    allfilms: filmCollapseTableFields,
-  };
-
-  const dynamicFields = collapseTableFields[pathname] || [];
+export const CollapseTable = ({ index, openStates, data }: { index: number; openStates: any[]; data: any }) => {
+  const dynamicFields = useCollapseTableFields(useTableLocation());
   return (
     <TableRow>
-      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
         <Collapse in={openStates[index]} timeout="auto" unmountOnExit>
-          {dynamicFields.map((field, index) => (
+          {dynamicFields.map((field: any, index: number) => (
             <Box key={field.title} sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
                 {field.title}
               </Typography>
               <Table size="small" aria-label="purchases">
                 <CollapseTableHeadComp index={index} />
-                <CollapseTableBodyComp film={film} index={index} />
+                <CollapseTableBodyComp data={data} index={index} />
               </Table>
             </Box>
           ))}

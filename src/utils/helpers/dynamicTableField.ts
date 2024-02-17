@@ -1,22 +1,20 @@
-// tableUtils.ts
 import { useLocation } from "react-router-dom";
-import { filmCollapseTableFields } from "../table-fields/filmTableFields";
+import { filmCollapseTableFields, filmTableFields } from "../table-fields/filmTableFields";
+import { peopleCollapseTableFields, peopleTableFields } from "../table-fields/peopleTableFields";
 
-export const useTableFields = (pathname: string) => {
-  const collapseTableFields: {
-    [key: string]: {
-      title: string;
-      parentKey: string;
-      childKey: string;
-      fields: (
-        | { id: number; key: string; name: string; align: string }
-        | { id: number; key: string; name: string; align?: undefined }
-      )[];
-    }[];
-  } = {
-    allfilms: filmCollapseTableFields,
+export const useDynamicTableFields = (pathname: string) => {
+  const tableFields: { [key: string]: any } = {
+    allfilms: filmTableFields,
+    allpeople: peopleTableFields,
   };
+  return tableFields[pathname] || [];
+};
 
+export const useCollapseTableFields = (pathname: string) => {
+  const collapseTableFields: { [key: string]: any } = {
+    allfilms: filmCollapseTableFields,
+    allpeople: peopleCollapseTableFields,
+  };
   return collapseTableFields[pathname] || [];
 };
 
